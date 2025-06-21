@@ -1,0 +1,12 @@
+GFW tracks a flow, defined by a 4-tuple `(src_ip, src_port, dst_ip, dst_port)`, for exactly 60 seconds.
+
+## Experiment:
+
+1. **Step 1**: Send a random UDP payload with a fixed (src_port, dst_port)
+2. **Step 2**: Wait for **X** seconds.
+3. **Step 3**: Send three Client Hello messages (with a 1-second gap between each) to the same (src_port, dst_port)
+4. **Step 4**: Repeat from Step 2 this process for different values of **X**.
+
+## Observations:
+- The server-side packet capture (pcap) shows that the blocking is triggered when the gap between the last packet sent and the Client Hello message reaches 60 seconds.
+- However, it’s possible to trigger residual blocking on the 3-tuple `(src_ip, dst_ip, dst_port)` by using a different source port.

@@ -1,0 +1,50 @@
+root@quic-shanghai:~/ttl# python3 check-dns.py
+Sending DNS query with TTL=1
+Sending DNS query with TTL=2
+Sending DNS query with TTL=3
+Sending DNS query with TTL=4
+Sending DNS query with TTL=5
+Sending DNS query with TTL=6
+Sending DNS query with TTL=7
+Sending DNS query with TTL=8
+Sending DNS query with TTL=9
+Received DNS response with TTL=9
+Readable Response:
+Transaction ID: 1234
+Flags: 8580
+Questions: 1
+Answers: 1
+Authority Records: 0
+Additional Records: 0
+root@quic-shanghai:~/ttl# traceroute -U -p 53 REDACTED
+traceroute to REDACTED (REDACTED), 30 hops max, 60 byte packets
+ 1  * * *
+ 2  * * *
+ 3  *  REDACTED ( REDACTED)  3.129 ms  REDACTED ( REDACTED)  21.018 ms
+ 4   REDACTED ( REDACTED)  5.181 ms  REDACTED ( REDACTED)  8.069 ms *
+ 5   REDACTED ( REDACTED)  37.557 ms  REDACTED ( REDACTED)  5.571 ms  REDACTED ( REDACTED)  4.690 ms
+ 6   REDACTED ( REDACTED)  5.844 ms  REDACTED ( REDACTED)  5.662 ms  REDACTED ( REDACTED)  5.116 ms
+ 7  * * *
+ 8  * 101.95.218.209 (101.95.218.209)  6.367 ms 101.95.224.93 (101.95.224.93)  6.653 ms
+ 9  * 202.97.94.237 (202.97.94.237)  8.202 ms *
+10  * * *
+11  * * 202.97.27.214 (202.97.27.214)  174.138 ms
+12  port-channel1.core4.sjc2.he.net (184.105.223.126)  152.041 ms  154.386 ms  172.089 ms
+13  * port-channel8.core6.fmt2.he.net (72.52.92.245)  170.123 ms *
+14  * * *
+15  stanford-university.e0-62.core2.pao1.he.net (184.105.177.238)  135.305 ms  152.068 ms  133.809 ms
+16  csee-west-rtr-vl12.sunet (171.66.0.238)  171.377 ms  173.592 ms  175.599 ms
+17  * * *
+18  * * *
+19  * * *
+20  * * *
+21  * * *
+22  * * *
+23  * * *
+24  * * *
+25  * * *
+26  * * *
+27  * * *
+28  * * *
+29  * * *
+30  * * *

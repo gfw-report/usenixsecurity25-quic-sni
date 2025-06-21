@@ -1,0 +1,52 @@
+root@quic-guangzhou:~/ttl# python3 check-dns.py
+Sending DNS query with TTL=1
+Sending DNS query with TTL=2
+Sending DNS query with TTL=3
+Sending DNS query with TTL=4
+Sending DNS query with TTL=5
+Sending DNS query with TTL=6
+Sending DNS query with TTL=7
+Sending DNS query with TTL=8
+Sending DNS query with TTL=9
+Sending DNS query with TTL=10
+Sending DNS query with TTL=11
+Received DNS response with TTL=11
+Readable Response:
+Transaction ID: 1234
+Flags: 8580
+Questions: 1
+Answers: 1
+Authority Records: 0
+Additional Records: 0
+root@quic-guangzhou:~/ttl# traceroute -U -p 53 REDACTED
+traceroute to REDACTED (REDACTED), 30 hops max, 60 byte packets
+ 1  REDACTED (REDACTED)  0.512 ms REDACTED (REDACTED)  0.679 ms  0.737 ms
+ 2  REDACTED (REDACTED)  0.319 ms REDACTED (REDACTED)  0.442 ms REDACTED (REDACTED)  0.426 ms
+ 3  REDACTED (REDACTED)  0.404 ms REDACTED (REDACTED)  0.379 ms REDACTED (REDACTED)  0.365 ms
+ 4  REDACTED (REDACTED)  0.851 ms REDACTED (REDACTED)  1.075 ms REDACTED (REDACTED)  0.853 ms
+ 5  11.95.63.225 (11.95.63.225)  0.997 ms 11.94.57.201 (11.94.57.201)  0.844 ms 11.94.57.225 (11.94.57.225)  0.873 ms
+ 6  10.54.220.153 (10.54.220.153)  0.711 ms 11.94.152.213 (11.94.152.213)  0.675 ms 11.94.153.17 (11.94.153.17)  0.630 ms
+ 7  10.255.77.113 (10.255.77.113)  0.846 ms 11.94.153.125 (11.94.153.125)  0.874 ms 11.94.155.85 (11.94.155.85)  1.163 ms
+ 8  * * *
+ 9  * * *
+10  * 113.96.5.81 (113.96.5.81)  2.244 ms 113.96.4.185 (113.96.4.185)  3.672 ms
+11  202.97.71.238 (202.97.71.238)  3.758 ms * *
+12  * * *
+13  202.97.91.86 (202.97.91.86)  154.361 ms  154.290 ms 202.97.63.30 (202.97.63.30)  167.271 ms
+14  * port-channel1.core4.sjc2.he.net (184.105.223.126)  171.850 ms *
+15  * * *
+16  * * *
+17  stanford-university.e0-62.core2.pao1.he.net (184.105.177.238)  155.848 ms  155.304 ms  170.447 ms
+18  csee-west-rtr-vl12.sunet (171.66.0.238)  181.527 ms  189.508 ms  196.073 ms
+19  * * *
+20  * * *
+21  * * *
+22  * * *
+23  * * *
+24  * * *
+25  * * *
+26  * * *
+27  * * *
+28  * * *
+29  * * *
+30  * * *

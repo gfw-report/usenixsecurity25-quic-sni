@@ -1,0 +1,43 @@
+\begin{table}[h!]
+\small
+\centering
+\begin{tabular}{lr}
+\toprule
+{Common Name} & {Count (\% of 360)} \\ \midrule
+Africa (Cape Town) & 110 (30.56\%) \\
+Asia Pacific (Hong Kong) & 360 (100.00\%) \\
+Asia Pacific (Hyderabad) & 13 (3.61\%) \\
+Asia Pacific (Jakarta) & 360 (100.00\%) \\
+Asia Pacific (Malaysia) & 360 (100.00\%) \\
+Asia Pacific (Melbourne) & 360 (100.00\%) \\
+Asia Pacific (Mumbai) & 360 (100.00\%) \\
+Asia Pacific (Osaka) & 145 (40.28\%) \\
+Asia Pacific (Seoul) & 246 (68.33\%) \\
+Asia Pacific (Singapore) & 360 (100.00\%) \\
+Asia Pacific (Sydney) & 360 (100.00\%) \\
+Asia Pacific (Thailand) & 360 (100.00\%) \\
+Asia Pacific (Tokyo) & 229 (63.61\%) \\
+Canada (Calgary) & 26 (7.22\%) \\
+Canada (Central) & 13 (3.61\%) \\
+Europe (Frankfurt) & 244 (67.78\%) \\
+Europe (Ireland) & 16 (4.44\%) \\
+Europe (London) & 12 (3.33\%) \\
+Europe (Milan) & 17 (4.72\%) \\
+Europe (Paris) & 10 (2.78\%) \\
+Europe (Spain) & 15 (4.17\%) \\
+Europe (Stockholm) & 14 (3.89\%) \\
+Europe (Zurich) & 17 (4.72\%) \\
+Israel (Tel Aviv) & 18 (5.00\%) \\
+Mexico (Central) & 13 (3.61\%) \\
+Middle East (Bahrain) & 201 (55.83\%) \\
+Middle East (UAE) & 22 (6.11\%) \\
+South America (Sao Paulo) & 12 (3.33\%) \\
+US East (N. Virginia) & 195 (54.17\%) \\
+US East (Ohio) & 21 (5.83\%) \\
+US West (N. California) & 21 (5.83\%) \\
+US West (Oregon) & 19 (5.28\%) \\
+\bottomrule
+\end{tabular}
+\caption{Summary of AWS region data.}
+\label{tab:aws-region-data}
+\end{table}

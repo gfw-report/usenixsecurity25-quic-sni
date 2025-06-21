@@ -1,0 +1,3 @@
+Sum of count where sport > dport: 6664686, 92.30% of total
+Sum of count where sport < dport: 551612, 7.64% of total
+Sum of count where sport == dport: 4629, 0.06% of total

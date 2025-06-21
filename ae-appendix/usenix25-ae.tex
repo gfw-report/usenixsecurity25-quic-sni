@@ -1,0 +1,484 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Artifact Appendix Template for Usenix Security'25 AE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\appendix
+\section{Artifact Appendix}
+% \textit{This artifact appendix is meant to be a self-contained document which
+% describes a roadmap for the evaluation of your artifact. It should include a
+% clear description of the hardware, software, and configuration requirements. In
+% case your artifact aims to receive the functional or results reproduced badge,
+% it should also include the major claims made by your paper and instructions on
+% how to reproduce each claim through your artifact. Linking the claims of your
+% paper to the artifact is a necessary step that ultimately allows artifact
+% evaluators to reproduce your results.}
+
+% \textit{Please fill all the mandatory sections, keeping their titles and
+% organization but removing the current illustrative content, and remove the
+% optional sections where those do not apply to your artifact.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Abstract}
+% {\em [Mandatory]}
+% {\em Provide a short description of your artifact.}
+
+Our paper presents the first study of China's new capability
+to censor QUIC connections based on the Server Name Indication (SNI)
+field. We find that China has started decrypting QUIC
+Initial packets at scale, employing unique filtering rules
+and a distinct blocklist different from its other censorship
+mechanisms. We measure the blocked domains, reverse-engineer
+the filtering rules (e.g., filtering connections where source port > destination port),
+and demonstrate how modest QUIC traffic surges can overwhelm
+the system and reduce the effectiveness of its blocking.
+Furthermore, we show how the GFW's QUIC blocking mechanism
+can be exploited to block UDP connections between arbitrary hosts. 
+
+This artifact provides the code and data from our experiments.
+It is structured to make all figures and results in the paper
+reproducible and to enable independent verification of our claims
+about the GFW's QUIC-SNI blocking.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Description \& Requirements}
+
+% \textit{[Mandatory] This section should list all the information necessary to
+% recreate the same experimental setup you have used to run your artifact. Where
+% it applies, the minimal hardware and software requirements to run your artifact.
+% It is also very good practice to list and describe in this section benchmarks
+% where those are part of, or simply have been used to produce results with, your
+% artifact.}
+
+\subsubsection{Security, privacy, and ethical concerns}
+% \textit{[Mandatory] Describe any risk for evaluators while executing your
+% artifact to their machines security, data privacy or others ethical concerns.
+% This is particularly important if destructive steps are taken or security
+The tools used in this artifact do not pose any risk to the evaluators' machines
+or data privacy. All measurements performed using this artifact are non-destructive and
+are for verification purposes only.
+
+
+\subsubsection{How to access}
+% {\em [Mandatory]} \textit{Describe here how to access your artifact. If you are
+% applying for the Artifacts Available badge, the archived copy of the artifacts
+% must be accessible via a stable reference or DOI. For this purpose, we recommend
+% Zenodo, but other valid hosting options include institutional and
+% third-party digital repositories (e.g., FigShare, Dryad, Software
+% Heritage, GitHub, or GitLab — not personal webpages). For repositories that can
+% evolve over time (e.g., GitHub), a stable reference to the evaluated version
+% (e.g., a URL pointing to a commit hash or tag) rather than the evolving version
+% reference (e.g., a URL pointing to a mere repository) is required. Note that the
+% stable reference provided at submission time is for the purpose of Artifact
+% Evaluation. Since the artifact can potentially evolve during the evaluation to
+% address feedback from the reviewers, another (potentially different) stable
+% reference will be later collected for the final version of the artifact (to be
+% included here for the camera-ready version).}
+The repository containing the code and data can be cloned from GitHub:\@
+\url{https://github.com/gfw-report/usenixsecurity25-quic-sni}. Archived versions
+of the artifact are available under the DOI: 10.5281/zenodo.15626727.
+
+\subsubsection{Hardware dependencies}
+% {\em [Mandatory]} \textit{Describe any specific hardware features required to
+% evaluate your artifact (vendor, CPU/GPU/FPGA, number of processors/cores,
+% microarchitecture, interconnect, memory, hardware counters, etc). If your
+% artifact requires special hardware, please provide instructions on how to gain
+% access to the hardware. For example, provide private SSH keys to access the
+% machines remotely. Please keep in mind that the anonymity of the reviewers needs
+% to be maintained and you may not collect or request personally identifying
+% information (e.g., email, name, address). [Simply write "None." where this does
+% not apply to your artifact.]}
+For the AE reviewers,
+we have provisioned two Virtual Private Servers (VPSes) for experiments.
+Both servers are configured with a single CPU core and 2GB of RAM. 
+The first is hosted in
+China at the Tencent Cloud Guangzhou Datacenter
+(AS45090) and uses an Intel Xeon Platinum 8255C CPU.
+The second is in the U.S. at AWS Oregon (AS16509) and
+uses an Intel Xeon E5-2686 v4 CPU. Reviewers can SSH into the servers 
+using the credentials provided.
+
+
+\subsubsection{Software dependencies}
+% {\em [Mandatory]} \textit{Describe any specific OS and software packages
+% required to evaluate your artifact. This is particularly important if you share
+% your source code and it must be compiled or if you rely on some proprietary
+% software that you cannot include in your package. In such a case, you must
+% describe how to obtain and to install all third-party software, data sets, and
+% models. [Simply write "None." where this does not apply to your artifact.]}
+Both servers provided to the reviewers run Ubuntu 20.04 LTS.
+The following software tools and libraries are required
+on the local machine to compile and run the
+tools and experiments in this artifact:
+
+% Decrease the space between items in the list
+\begin{compactitem}
+    \item GNU make utility
+    \item Docker >= 20.10.0
+    \item Python 3.9+
+\end{compactitem}
+
+The primary evaluation method uses a Docker container to
+build all necessary tools. However, individual tools
+can be compiled and run directly on your local machine
+without Docker. If you choose this path,
+you will also need to install:
+\begin{compactitem}
+    \item Go 1.22+
+    \item Rust (rustc,cargo) 1.82+
+\end{compactitem}
+
+\subsubsection{Benchmarks}
+None.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Set-up}
+
+% {\em [Mandatory]} \textit{This section should include all the installation and
+% configuration steps required to prepare the environment to be used for the
+% evaluation of your artifact.}
+We provide AE reviewers with two pre-configured VPSes (usenix-ae-us and usenix-ae-cn)
+that include all the required tools and dependencies.
+For those who wish to set up their own environment,
+we also offer a one-click script to automatically
+compile and transfer the tools on new VPSes.
+
+
+\subsubsection{Installation}
+% {\em [Mandatory]} \textit{Instructions to download and install dependencies as
+% well as the main artifact. After these steps the evaluator should be able to run
+% a simple functionality test.}
+
+\begin{compactitem}
+    \item Docker: \url{https://docs.docker.com/get-docker/}
+    \item GNU make: \url{https://gnu.org/software/make/}
+    \item Download the repository: \url{https://github.com/gfw-report/usenixsecurity25-quic-sni} using Git clone.
+    \item Compile and transfer tools to VPSes:
+\begin{verbatim}
+cd usenixsecurity25-quic-sni/utils;
+make  \
+  SERVER_HOST=$USENIX_AE_US \
+  SERVER_USER=$USENIX_AE_US_USER \
+  SERVER_SSH_KEY=$USENIX_AE_SSH_KEY \
+  CLIENT_HOST=$USENIX_AE_CN \
+  CLIENT_USER=$USENIX_AE_CN_USER \
+  CLIENT_SSH_KEY=$USENIX_AE_SSH_KEY
+
+\end{verbatim}
+\end{compactitem}
+
+Running the \texttt{make} command will compile the necessary tools and transfer tools
+to the servers. The \texttt{SERVER\_HOST/USER/KEY} and \texttt{CLIENT\_HOST/USER/KEY} variables
+should be set using the credentials provided.
+
+
+
+\subsubsection{Basic Test}
+% {\em [Mandatory]} \textit{Instructions to run a simple functionality test. Does
+% not need to run the entire system, but should check that all required software
+% components are used and functioning fine. Please include the expected successful
+% output and any required input parameters.}
+
+Log in to the two VPSes using the provided credentials:
+\begin{verbatim}
+ssh -i $USENIX_AE_SSH_KEY \ 
+  $USENIX_AE_CN_USER@$USENIX_AE_CN
+
+# In a separate terminal window:
+ssh -i $USENIX_AE_SSH_KEY \
+  $USENIX_AE_US_USER@$USENIX_AE_US
+\end{verbatim}
+
+
+\noindent Then run the following command on the usenix-ae-us VPS:
+\begin{verbatim}
+sudo tcpdump udp and host $USENIX_AE_CN \
+ -Uw - | ./server-parser
+\end{verbatim}     
+
+
+\noindent On the usenix-ae-cn VPS:
+\begin{verbatim}
+echo baidu.com | ./quic-sni-sender  -p 443 \ 
+  --sport=65000 --dip=$USENIX_AE_US \ 
+  --socket-pool-size 1
+\end{verbatim}
+
+\noindent After 10 seconds, check the terminal on the server (usenix-ae-us).
+You will see output in CSV format. The value in the last
+column indicates the test result. A value of \texttt{True} means the
+QUIC connection was blocked, while \texttt{False} means
+the connection was successful.
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Evaluation workflow}
+% {\em [Mandatory for Artifacts Functional \& Results Reproduced, optional for
+% Artifact Available]} \textit{This section should include all the operational
+% steps and experiments which must be performed to evaluate if your your artifact is
+% functional and to validate your paper's key results and claims. For that
+% purpose, we ask you to use the two following subsections and cross-reference the
+% items therein as explained next.}
+
+\subsubsection{Major Claims}
+% {\em [Mandatory for Artifacts Functional \& Results Reproduced, optional for
+% Artifact Available]} \textit{Enumerate here the major claims (Cx) made in your
+% paper. Follows an example:}\\
+
+\begin{compactdesc}
+    \item[(C1):] GFW decrypts QUIC Initial packets to inspect SNI fields and block QUIC connections.
+    This is proven by experiment (E1).
+    \item[(C2):] The GFW blocks QUIC connections where the client's
+    source port is greater than the server's destination port.
+    This is supported by experiment (E2).
+    \item[(C3):] The GFW exhibits varied responses to different QUIC and QUIC-like payloads. This can be 
+    confirmed by experiment (E3). 
+    \item[(C4):] Sending a dummy UDP payload before the Client
+    Initial packet can bypass the GFW's QUIC-SNI blocking. This is proven by experiment (E4).
+
+\end{compactdesc}
+
+\subsubsection{Experiments}
+
+Before proceeding, ensure the VPSes
+are set up with the tools and dependencies detailed in
+the previous section. The experiments will be conducted between a
+client machine in China (usenix-ae-cn) and a server in the U.S. (usenix-ae-us).
+In each experiment, the client will send QUIC packets/probes to the server.
+To prevent residual interference, a 5-minute interval should be observed between
+each test. We recommend running the experiments multiple times, as
+the GFW's QUIC-blocking behavior can exhibit diurnal variations (see Section 3.4 of the paper).
+
+% use paralist for more compact list format: for more details check here:
+% https://texfaq.org/FAQ-complist
+\begin{compactdesc}
+
+    \item[(E1):] \textit{[Test QUIC-SNI Blocking] [5 human-minutes + 5 compute-mintues]:
+    This experiment verifies the GFW's ability to decrypt and block QUIC connections based on SNI in the Initial Packet.}
+
+    \begin{asparadesc}
+        % \item[How to:]  \textit{Describe thoroughly the steps to perform the
+        % experiment and to collect and organize the results as expected from your
+        % paper. We encourage you to use the following structure with three main
+        % blocks for the description of your experiment.}
+
+        \item[Preparation:] Log in to the two VPSes using the provided credentials.
+        
+
+\item[Execution:] On the usenix-ae-us VPS, run:
+\begin{verbatim}
+sudo tcpdump udp and host $USENIX_AE_CN \
+-Uw - | ./server-parser
+\end{verbatim}
+On the client (usenix-ae-cn), run the following command to send a QUIC probe. 
+This probe consists of a Client Initial packet, followed by a 5 second delay, and then subsequent 10-byte UDP payloads.
+\begin{verbatim}
+echo google.com | ./quic-sni-sender -p 443 \
+--socket-pool-size 1 --dip=$USENIX_AE_US \
+--sport=55000
+\end{verbatim}
+\vspace{3pt}
+\item[Results:] Wait approximately 10 seconds for the server-parser script on the server to produce its output. A typical result will appear as follows:
+\vspace{3pt}
+\begin{tiny}
+\begin{verbatim}
+# 2025/06/04 03:01:34 Started parsing: /dev/stdin
+# tcpdump: listening on eth0, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+# 2025-06-04T03:02:08Z,{usenix-ae-cn_IP},{usenix-ae-us_IP},55001,4437,google.com,true
+\end{verbatim}
+\end{tiny}
+The parser determines that a connection is blocked if it receives the QUIC Initial Packet but none
+of the subsequent UDP payloads arrive. This outcome is indicated by the true value in the final column. 
+A false value signifies that no blocking was detected.
+Test other SNI values like \texttt{baidu.com} (to verify behavior for exempt domains) and
+\texttt{cloudflare-dns.com}, \texttt{youtube.com} (to verify blocking for other domains).
+
+\end{asparadesc}
+
+
+
+\item[(E2):] \textit{[Testing Rule: SourcePort > Destination Port] [5 human-minutes + 5 compute-minutes]: This experiment tests the GFW's filtering rule for QUIC Initial packets in which the source port must be greater than the destination port.}
+\begin{asparadesc}
+    \item[Preparation:] Run the parser \texttt{( sudo tcpdump udp and host \$USENIX\_AE\_CN -Uw - | ./server-parser )} from E1 on the server (usenix-ae-us). 
+    \item[Execution:] Run the following command on the client (usenix-ae-cn):
+
+\begin{verbatim}
+
+echo google.com | ./quic-sni-sender \ 
+-p 5000 --socket-pool-size 1 \ 
+--dip=$USENIX_AE_US \
+--followup-payloads=10 \ 
+--bind-ip=0.0.0.0 \
+--sport=4000 \
+--no-use-greater-srcports 
+# SrcPort (4000) < DestPort (5000) 
+-> Expected Result: NOT BLOCKED
+
+
+echo google.com | ./quic-sni-sender \ 
+-p 443 --socket-pool-size 1 \ 
+--dip=$USENIX_AE_US \
+--followup-payloads=10 \ 
+--bind-ip=0.0.0.0 \
+--sport=65000 
+# SrcPort (65000) > DestPort (443) \ 
+-> Expected Result: BLOCKED
+
+\end{verbatim}
+        \item [Results] The results from the first command should show a \texttt{False} value in the last column, indicating that the connection was not blocked. The second command should show a \texttt{True} value, indicating that the connection was blocked due to the source port being greater than the destination port. 
+
+
+    \end{asparadesc}
+
+    \item[(E3):] \textit{[Test Different QUIC Payloads] [30 human-minutes + 30 compute-minutes]: This experiment evaluates the GFW's blocking behavior based on various QUIC payloads as detailed in Table 3 of the paper. The payloads can be generated using the \texttt{quic-packet-builder} utility in the \texttt{utils} directory.}
+    
+    \begin{asparadesc}
+        \item[Preparation:] Begin by capturing UDP traffic on the server (usenix-ae-us) using: \texttt{sudo tcpdump udp and host \$USENIX\_AE\_CN} 
+        \item[Execution:] On the client (usenix-ae-cn), run the following commands using the payloads files linked in the table \href{https://github.com/gfw-report/usenixsecurity25-quic-sni?tab=readme-ov-file#experiment-3-testing-quic-payloads-listed-in-table-3-of-the-paper}{here}.
+        
+\begin{verbatim}
+# Send QUIC payload using netcat
+nc -u -q 0 -p 60001 $USENIX_AE_US 444 \ 
+< ./payloads/exp1.bin
+\end{verbatim}
+Then send follow-up payloads repeatedly to the same destination port using the same source port using the following command:
+\begin{verbatim}
+# Send arbitrary UDP payload to the server
+echo "10101010101010101010" | xxd -r -p \
+| nc -u -q 0 -p 60001 $USENIX_AE_US 444
+\end{verbatim}
+
+        \item[Results:] Depending on if any follow-up payload packets arrive at the server, one can determine if the connection was blocked or not. The results should match findings in Table 3 of the paper. Change the source and destination ports between each test to avoid residual interference.
+    \end{asparadesc}
+
+
+
+
+
+    \item[(E4):] \textit{[Test Dummy Payload Bypass] [5 human-minutes + 5 compute-minutes]: This experiment shows how sending a dummy UDP payload before the Client Initial packet can bypass the GFW's blocking.}
+    \begin{asparadesc}
+        \item[Preparation:] Capture UDP traffic on the server (usenix-ae-us) using: \texttt{sudo tcpdump udp and host \$USENIX\_AE\_CN }
+        \item[Execution:] Run the following command on the client (usenix-ae-cn):
+\begin{verbatim}
+# Send an arbitrary UDP payload to the server
+echo "0000000000000000000000000000" \
+| xxd -r -p | nc -u -q 0 \
+-p 65535 $USENIX_AE_US 6126
+\end{verbatim}
+Wait a few seconds and then send the QUIC packet containing a forbidden SNI (google.com in this example):
+\begin{verbatim}
+echo google.com | ./quic-sni-sender -p 6126 \
+--socket-pool-size 1 --dip=$USENIX_AE_US \
+--sport=65535
+\end{verbatim}
+        \item[Results:] Successful arrival of all subsequent packets on the 4-tuple \texttt{(src\_ip, 65535, dst\_ip, 6126)} at the server confirms the bypass. 
+    \end{asparadesc}
+
+\end{compactdesc}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{table*}[t]
+    \centering
+    \small
+    \begin{tabularx}{\linewidth}{|X|X|X|X|} 
+        \hline
+    \textbf{Section} & \textbf{Figure} & \textbf{Command} & \textbf{Output file} \\
+
+    \hline
+    3.2 GFW's Blocking Latency & Fig 2 \& 10 & cd how-fast-gfw-blocks; make clean; make & how-fast-the-gfw-blocks.pdf, how-fast-the-gfw-blocks-boxplot.pdf \\
+    \hline
+    3.3 Blocking Rule: Source Port \textgreater{}= Destination Port & Fig 3 \& 11 & cd rule-srcport-greater-than-dst-port; make clean; make & heatmap-ports-401-450-step-1\_heatmap.pdf, heatmap-ports-1-65000-step-1000\_heatmap.pdf \\
+    \hline
+    3.4 Diurnal Blocking Pattern & Fig 4 & cd diurnal-blocking; make clean; make & diurnal-timeseries-three-sources.pdf \\
+    \hline
+    3.6 Parsing Idiosyncrasies & Fig 5 & cd what-triggers-blocking; make clean; make & quic\_parse\_heatmap.pdf \\
+    \hline
+    4. Monitoring the Blocklist over Time & Fig 6 & cd sni-blocklist; make clean; make & domains-blocked-over-quic-weekly.pdf \\
+    \hline
+    4.1. Comparison with Other Blocklists & Fig 7 & cd overlap-between-blocklists; make clean; make & venn-intersection-between-lists.pdf \\
+    \hline
+    5. GFW Degradation Attack & Fig 8 & \small{cd degradation-attack; cd Figure\_8\_experiments /AVG\_exp23-22-20\_sensitive-stressing\_and\_exp25-26-27\_random-stressing; make clean; make} & stressing\_rates.eps \\
+    \hline
+    \end{tabularx}
+    \label{tab:t1}
+
+    \caption{This table lists the commands required to reproduce each figure from the main paper using the provided artifact. For each figure, the corresponding section, command, and output file are specified.}
+\end{table*}
+
+
+
+
+\begin{table*}[h!]
+    \centering
+    \small
+    \begin{tabularx}{\linewidth}{|l|X|X|} 
+    \hline
+    \textbf{Table} & \textbf{Data sources} & \textbf{Command} \\
+    \hline
+    \textbf{1} & ./network-tap/data/tuple-count-2025-01-22-16-00.statistics-quic-conn.txt, ./network-tap/data/tuple-count-2025-01-22-16-00.statistics-udp-pkt.txt & — \\
+    \hline
+    \textbf{2} & ./ttl-location/data/DNS/{city}-dns-and-traceroute-result.txt & — \\
+    \hline
+    \textbf{3} & ./what-triggers-blocking/payloads, ./what-triggers-blocking/results.txt & — \\
+    \hline
+    \textbf{4} & ./sni-blocklist/ & \verb|make clean && make| \\
+    \hline
+    \textbf{5} & ./overlap-between-blocklists & \verb|make clean && make| \\
+    \hline
+    \textbf{6} & ./availability-attack/data/ec2/ & — \\
+
+    \hline
+    \end{tabularx}
+    \label{tab:t2}
+
+    \caption{This table lists the data sources and commands required to reproduce each table from the main paper using the artifact repository.}
+\end{table*}
+
+
+\subsection{Reproducing Paper Resources}
+\label{sec:reuse}
+% {\em [Optional]} \textit{This section is meant to optionally share additional
+% information on how to use your artifact beyond the research presented in your
+% paper. In fact, a broader objective of an artifact evaluation is to help you
+% make your research reusable by others.}
+
+% \textit{You can include in this section any sort of instruction that you believe
+% would help others re-use your artifact, like, for example, scaling down/up
+% certain components of your artifact, working on different kinds of input or
+% data-set, customizing the behavior replacing a specific module/algorithm, etc.}
+
+To reproduce the figures and data presented in the paper, follow these instructions:
+First, set up your Python environment:
+\begin{verbatim}
+python3 -m venv venv
+. venv/bin/activate
+pip install -r requirements.txt
+\end{verbatim}
+
+
+Each figure and table in the paper can be reproduced
+individually via the make command in its respective experiment directory.
+A comprehensive list of the commands required to reproduce each figure and table is provided in
+Tables 1 and 2. These commands should be run from the \texttt{experiments} directory.
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Version}
+%%%%%%%%%%%%%%%%%%%%
+% Obligatory.
+% Do not change/remove.
+%%%%%%%%%%%%%%%%%%%%
+Based on the LaTeX template for Artifact Evaluation V20231005. Submission,
+reviewing and badging methodology followed for the evaluation of this artifact
+can be found at \url{https://secartifacts.github.io/usenixsec2025/}.
