@@ -62,7 +62,7 @@ The data files for each table in the paper are listed below:
 | Table | Data sources                                                                                                                                             | Command |
 | :---: | :------------------------------------------------------------------------------------------------------------------------------------------------------- | :----------------------- |
 | **1** | `./network-tap/data/tuple-count-2025-01-22-16-00.statistics-quic-conn.txt`,`./network-tap/data/tuple-count-2025-01-22-16-00.statistics-udp-pkt.txt`      | —                        |
-| **2** | `./ttl-location/data/DNS/{city}-dns-and-traceroute-result.txt`                                                                                           | —                        |
+| **2** | `./ttl-location/data/DNS/{city}-dns-and-traceroute-result.txt`,`./ttl-location/data/QUIC/{city}-ttl_anon.pcap`                                                                                           | —                        |
 | **3** | `./what-triggers-blocking/payloads`, `./what-triggers-blocking/results.txt`                                                                              | —                        |
 | **4** | `./sni-blocklist/`                                                                                                                                       | `make clean && make`       |
 | **5** | `./overlap-between-blocklists`                                                                                                                           | `make clean && make` |

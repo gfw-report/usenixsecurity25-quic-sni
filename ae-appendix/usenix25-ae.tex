@@ -113,6 +113,7 @@ tools and experiments in this artifact:
 % Decrease the space between items in the list
 \begin{compactitem}
     \item GNU make utility
+    \item GNU plot (gnuplot) utility
     \item Docker >= 20.10.0
     \item Python 3.9+
 \end{compactitem}
@@ -421,7 +422,7 @@ echo google.com | ./quic-sni-sender -p 6126 \
     \hline
     \textbf{1} & ./network-tap/data/tuple-count-2025-01-22-16-00.statistics-quic-conn.txt, ./network-tap/data/tuple-count-2025-01-22-16-00.statistics-udp-pkt.txt & — \\
     \hline
-    \textbf{2} & ./ttl-location/data/DNS/{city}-dns-and-traceroute-result.txt & — \\
+    \textbf{2} & ./ttl-location/data/DNS/\{city\}-dns-and-traceroute-result.txt, ./ttl-location/data/QUIC/\{city\}-ttl\_anon.pcap & — \\
     \hline
     \textbf{3} & ./what-triggers-blocking/payloads, ./what-triggers-blocking/results.txt & — \\
     \hline
@@ -429,7 +430,7 @@ echo google.com | ./quic-sni-sender -p 6126 \
     \hline
     \textbf{5} & ./overlap-between-blocklists & \verb|make clean && make| \\
     \hline
-    \textbf{6} & ./availability-attack/data/ec2/ & — \\
+    \textbf{6} & ./availability-attack/data/ec2/ & \verb|make clean && make| \\
 
     \hline
     \end{tabularx}
