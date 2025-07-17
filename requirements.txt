@@ -6,7 +6,7 @@ pandas>=2.0.1
 paramiko==3.3.1
 pytz==2022.7
 Requests==2.32.4
-scapy==2.4.3
+scapy>=2.4.3
 seaborn==0.13.2
 venny4py==1.0.3
 setuptools>=67.3.3

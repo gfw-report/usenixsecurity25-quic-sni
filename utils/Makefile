@@ -55,7 +55,7 @@ build: | $(BUILD_DIR) build_sender build_parser
 build_sender: $(BIN_RUST)
 $(BIN_RUST): | $(BUILD_DIR)
 	docker run --rm \
-		-v $(CURDIR):/src \
+		-v $(CURDIR):/src:Z \
 		-w /src/$(SNI_SENDER) \
 		--platform $(TARGET_OS)/$(TARGET_ARCH) \
 		$(RUST_IMG) \
@@ -70,7 +70,7 @@ $(BIN_RUST): | $(BUILD_DIR)
 build_parser: $(BIN_GO)
 $(BIN_GO): | $(BUILD_DIR)
 	docker run --rm \
-		-v $(CURDIR):/src \
+		-v $(CURDIR):/src:Z \
 		-w /src/$(SERVER_PARSER) \
 		--platform $(TARGET_OS)/$(TARGET_ARCH) \
 		$(GO_IMG) \
