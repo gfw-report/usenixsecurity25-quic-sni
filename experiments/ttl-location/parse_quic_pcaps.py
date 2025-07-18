@@ -1,18 +1,14 @@
 #!/usr/bin/env python3
 """
-gap_scanner.py
+parse_quic_pcaps.py
 ==============
 
-Scan a pcap for **gaps of >3 minutes** between consecutive frames and
+Scan a pcap for **gaps of > 3 minutes** between consecutive frames and
 dump each surrounding pair:
-
-• Show bytes **42…end‑5** (skip Ethernet+IPv4+UDP header, trim 5‑byte tail)
-• Present **both HEX and ASCII** views
-• Non‑printable ASCII bytes appear as “.”
 
 Usage
 -----
-    python gap_scanner.py -f beijing-ttl_anon.pcap
+    python parse_quic_pcaps.py -f beijing-ttl_anon.pcap
 """
 
 import argparse
@@ -22,7 +18,7 @@ from scapy.all import PcapReader, raw  # type: ignore
 # ---------------------------------------------------------------------------
 # Variables
 # ---------------------------------------------------------------------------
-MIN_GAP      = 120     # seconds (3 min)
+MIN_GAP      = 180     # seconds (3 min)
 MAX_GAP      = 1000     # seconds
 HEADER_SKIP  = 42      # bytes to skip from start of frame (Ether+IP+UDP)
 TRIM_BYTES   = 5       # bytes to drop from the tail
