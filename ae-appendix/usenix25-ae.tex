@@ -75,7 +75,7 @@ are for verification purposes only.
 % included here for the camera-ready version).}
 The repository containing the code and data can be cloned from GitHub:\@
 \url{https://github.com/gfw-report/usenixsecurity25-quic-sni}. Archived versions
-of the artifact are available under the DOI: 10.5281/zenodo.15626727.
+of the artifact are available under the DOI: 10.5281/zenodo.15606165.
 
 \subsubsection{Hardware dependencies}
 % {\em [Mandatory]} \textit{Describe any specific hardware features required to
@@ -164,7 +164,6 @@ make  \
   CLIENT_HOST=$USENIX_AE_CN \
   CLIENT_USER=$USENIX_AE_CN_USER \
   CLIENT_SSH_KEY=$USENIX_AE_SSH_KEY
-
 \end{verbatim}
 \end{compactitem}
 
@@ -316,7 +315,6 @@ echo google.com | ./quic-sni-sender \
 --no-use-greater-srcports 
 # SrcPort (4000) < DestPort (5000) 
 -> Expected Result: NOT BLOCKED
-
 
 echo google.com | ./quic-sni-sender \ 
 -p 443 --socket-pool-size 1 \ 
